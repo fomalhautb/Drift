@@ -1,0 +1,7 @@
+
+Library
+obj
+UnityPackageManager
+*.sln
+*.userprefs
+*csproj
