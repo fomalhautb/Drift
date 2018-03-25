@@ -1,7 +1,11 @@
-
+test_Data
 Library
 obj
 UnityPackageManager
 *.sln
 *.userprefs
 *csproj
+UnityPlayer.dll
+
+*.exe
+*.apk
