@@ -7,21 +7,27 @@ public class CameraMovement : MonoBehaviour {
 	public GameObject focus;
 	public float height;
 	public float distance;
-	public float lerpSpeed;
+	public float rotationLerpSpeed;
+	public float moveLerpSpeed;
+	public float cameraAngle;
+	public float cameraMovementLimit;
 
 	void Start () 
 	{
 		
 	}
 
-	void Update () 
+	void FixedUpdate () 
 	{
-		/*transform.position = focus.transform.position + new Vector3 (0, height, 0) + focus.GetComponent<Rigidbody> ().velocity.normalized * distance;
-		transform.LookAt (focus.transform);
-		Vector3 camRot = new Vector3 (transform.rotation.eulerAngles.x, Quaternion.LookRotation (focus.GetComponent<Rigidbody> ().velocity).eulerAngles.y, 0);
-		camRot = Vector3.Lerp (transform.rotation.eulerAngles, camRot, lerpSpeed * Time.deltaTime);
-		transform.rotation = Quaternion.Euler (camRot);*/
-		transform.position = focus.transform.position + Vector3.up * height;
-		//transform.rotation = Quaternion.Euler (Vector3.zero);
+		if (focus != null)
+		{
+			if (focus.GetComponent<Rigidbody> ().velocity.magnitude > cameraMovementLimit)
+			{
+				Vector3 camRot = new Vector3 (cameraAngle, Quaternion.LookRotation (focus.GetComponent<Rigidbody> ().velocity).eulerAngles.y, 0);
+				transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.Euler(camRot), rotationLerpSpeed * Time.fixedDeltaTime);
+				Vector3 camPos = focus.transform.position + Vector3.up * height + focus.GetComponent<Rigidbody> ().velocity.normalized * distance;
+				transform.position = Vector3.Lerp (transform.position, camPos, moveLerpSpeed*Time.fixedDeltaTime);
+			}
+		}
 	}
 }
