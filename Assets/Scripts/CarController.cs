@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class CarController : NetworkBehaviour
 {
@@ -13,15 +14,21 @@ public class CarController : NetworkBehaviour
 	public float backAcceleration;
 	public AnimationCurve torque;
 	public float rotateDrag;
+	public GameObject[] tires;
+	public Text text;
 
 	void Start ()
 	{
-		
+		text = transform.Find ("/Canvas/Text").GetComponent<Text>();
+		if (isLocalPlayer)
+		{
+			Camera.main.GetComponent<CameraMovement> ().focus = transform.gameObject;
+		}
 	}
 
 	void Update ()
 	{
-		
+		text.text = Input.gyro.gravity.ToString();
 	}
 
 	void FixedUpdate ()
@@ -35,6 +42,7 @@ public class CarController : NetworkBehaviour
 		{
 			LerpPosition ();
 		} 
+		MoveTire ();
 	}
 
 	float InputY ()
@@ -80,6 +88,17 @@ public class CarController : NetworkBehaviour
 		transform.position = Vector3.Lerp (transform.position, playerPos, (playerSpeed+2) * Time.fixedDeltaTime);
 		transform.rotation = Quaternion.Lerp (transform.rotation, playerRot, (playerSpeed+2) * Time.fixedDeltaTime);
 	} 
+
+	void MoveTire()
+	{
+		for(int i=0; i < 4; i++)
+		{
+			if (i < 2)
+			{
+				tires [i].transform.rotation = Quaternion.Euler(transform.up * (transform.eulerAngles.y + 90 + InputX() * 30));
+			}
+		}
+	}
 
 	[Command]  
 	public void CmdSendServerPos(Vector3 pos, Quaternion rot, float speed)  
