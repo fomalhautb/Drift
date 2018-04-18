@@ -333,3 +333,5 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   rotateDrag: 2
+  tires: []
+  text: {fileID: 0}
