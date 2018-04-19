@@ -15,7 +15,7 @@ public class CarController : NetworkBehaviour
 	public AnimationCurve torque;
 	public float rotateDrag;
 	public GameObject[] tires;
-	public Text text;
+	public Text text;//test
 
 	void Start ()
 	{
@@ -23,12 +23,16 @@ public class CarController : NetworkBehaviour
 		if (isLocalPlayer)
 		{
 			Camera.main.GetComponent<CameraMovement> ().focus = transform.gameObject;
+			transform.tag = "Player";
+		} else
+		{
+			transform.tag = "OtherPlayer";
 		}
 	}
 
 	void Update ()
 	{
-		text.text = Input.gyro.gravity.ToString();
+		text.text = Input.gyro.gravity.ToString();//test
 	}
 
 	void FixedUpdate ()

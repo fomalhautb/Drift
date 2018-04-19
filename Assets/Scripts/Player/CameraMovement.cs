@@ -5,12 +5,16 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour {
 
 	public GameObject focus;
-	public float height;
-	public float distance;
-	public float rotationLerpSpeed;
-	public float moveLerpSpeed;
-	public float cameraAngle;
-	public float cameraMovementLimit;
+	public float[] height;
+	public float[] distance;
+	public float[] cameraAngle;
+
+	public bool[] rotVelocityDirection;
+	public bool[] moveVelocityDirection;
+	public float[] rotationLerpSpeed;
+	public float[] moveLerpSpeed;
+
+	public int currentCamNumber = 1;
 
 	void Start () 
 	{
@@ -21,13 +25,26 @@ public class CameraMovement : MonoBehaviour {
 	{
 		if (focus != null)
 		{
-			if (focus.GetComponent<Rigidbody> ().velocity.magnitude > cameraMovementLimit)
+			Vector3 camRot;
+			Vector3 camPos;
+
+			if (rotVelocityDirection[currentCamNumber])
 			{
-				Vector3 camRot = new Vector3 (cameraAngle, Quaternion.LookRotation (focus.GetComponent<Rigidbody> ().velocity).eulerAngles.y, 0);
-				transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.Euler(camRot), rotationLerpSpeed * Time.fixedDeltaTime);
-				Vector3 camPos = focus.transform.position + Vector3.up * height + focus.GetComponent<Rigidbody> ().velocity.normalized * distance;
-				transform.position = Vector3.Lerp (transform.position, camPos, moveLerpSpeed*Time.fixedDeltaTime);
+				camRot = new Vector3 (cameraAngle[currentCamNumber], Quaternion.LookRotation (focus.GetComponent<Rigidbody> ().velocity).eulerAngles.y, 0);
+			} else
+			{
+				camRot = new Vector3 (cameraAngle[currentCamNumber], focus.transform.rotation.eulerAngles.y, 0);
 			}
+			if (moveVelocityDirection[currentCamNumber])
+			{
+				camPos = focus.transform.position + Vector3.up * height[currentCamNumber] + focus.GetComponent<Rigidbody> ().velocity.normalized * distance[currentCamNumber];
+			} else
+			{
+				camPos = focus.transform.position + Vector3.up * height[currentCamNumber] + focus.transform.forward * distance[currentCamNumber];
+			}
+
+			transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.Euler(camRot), rotationLerpSpeed[currentCamNumber] * Time.fixedDeltaTime);
+			transform.position = Vector3.Lerp (transform.position, camPos, moveLerpSpeed[currentCamNumber]*Time.fixedDeltaTime);
 		}
 	}
 }
