@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class CarController : NetworkBehaviour
 {
-	[SyncVar] private Vector3 playerPos;  
-	[SyncVar] private Quaternion playerRot;  
-	[SyncVar] private float playerSpeed;  
 	public float acceleration;
 	public AnimationCurve accelerationDrag;
 	public float backAcceleration;
@@ -16,6 +13,11 @@ public class CarController : NetworkBehaviour
 	public float rotateDrag;
 	public GameObject[] tires;
 	public Text text;//test
+	public float phoneRotateRate = 2;
+
+	[SyncVar] private Vector3 playerPos;  
+	[SyncVar] private Quaternion playerRot;  
+	[SyncVar] private float playerSpeed;  
 
 	void Start ()
 	{
@@ -24,6 +26,8 @@ public class CarController : NetworkBehaviour
 		{
 			Camera.main.GetComponent<CameraMovement> ().focus = transform.gameObject;
 			transform.tag = "Player";
+			Input.gyro.enabled = true;
+			Input.gyro.updateInterval = 0.01f;
 		} else
 		{
 			transform.tag = "OtherPlayer";
@@ -51,12 +55,35 @@ public class CarController : NetworkBehaviour
 
 	float InputY ()
 	{
-		return Input.GetAxisRaw ("Vertical");
+		if (Application.platform == RuntimePlatform.Android)
+		{
+			if (Input.GetMouseButton(0))
+			{
+				if (Input.mousePosition.x < Screen.width / 2)
+				{
+					return -1;
+				} else
+				{
+					return 1;
+				}
+			}
+			return 0;
+
+		} else
+		{
+			return Input.GetAxisRaw ("Vertical");
+		}
 	}
 
 	float InputX ()
 	{
-		return Input.GetAxisRaw ("Horizontal");
+		if (Application.platform == RuntimePlatform.Android)
+		{
+			return Mathf.Max(Mathf.Min(Input.gyro.gravity.x * phoneRotateRate, 1), -1);
+		} else
+		{
+			return Input.GetAxisRaw ("Horizontal");
+		}
 		
 	}
 

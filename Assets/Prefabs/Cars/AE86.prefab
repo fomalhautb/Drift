@@ -573,3 +573,4 @@ MonoBehaviour:
   - {fileID: 1676637542382468}
   - {fileID: 1542847847789354}
   text: {fileID: 0}
+  phoneRotateRate: 2
