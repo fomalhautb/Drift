@@ -12,16 +12,14 @@ public class CarController : NetworkBehaviour
 	public AnimationCurve torque;
 	public float rotateDrag;
 	public GameObject[] tires;
-	public Text text;//test
 	public float phoneRotateRate = 2;
 
-	[SyncVar] private Vector3 playerPos;  
-	[SyncVar] private Quaternion playerRot;  
-	[SyncVar] private float playerSpeed;  
+	private Vector3 playerPos;  
+	private Quaternion playerRot;  
+	private float playerSpeed;  
 
 	void Start ()
 	{
-		text = transform.Find ("/Canvas/Text").GetComponent<Text>();
 		if (isLocalPlayer)
 		{
 			Camera.main.GetComponent<CameraMovement> ().focus = transform.gameObject;
@@ -34,18 +32,13 @@ public class CarController : NetworkBehaviour
 		}
 	}
 
-	void Update ()
-	{
-		text.text = Input.gyro.gravity.ToString();//test
-	}
-
 	void FixedUpdate ()
 	{
 		if (isLocalPlayer)
 		{
 			MoveCar ();
 			ComputeCarPhysic ();
-			CmdSendServerPos (transform.position, transform.rotation, GetComponent<Rigidbody> ().velocity.magnitude);
+			CmdSendServerPos (transform.position, transform.rotation, GetComponent<Rigidbody> ().velocity.magnitude, GetComponent<NetworkIdentity>().GetInstanceID());
 		} else
 		{
 			LerpPosition ();
@@ -131,11 +124,25 @@ public class CarController : NetworkBehaviour
 		}
 	}
 
-	[Command]  
-	public void CmdSendServerPos(Vector3 pos, Quaternion rot, float speed)  
+	[Command]
+	public void CmdSendServerPos(Vector3 pos, Quaternion rot, float speed, int id)  
 	{  
 		playerPos = pos;  
 		playerRot = rot;  
 		playerSpeed = speed;
-	} 
+		RpcSycPos (pos, rot, speed, id);
+	}
+
+	[ClientRpc]
+	public void RpcSycPos(Vector3 pos, Quaternion rot, float speed, int id)
+	{
+		if (id != GetComponent<NetworkIdentity> ().GetInstanceID())
+		{
+			playerPos = pos;  
+			playerRot = rot;  
+			playerSpeed = speed;
+		}
+	}
+
+
 }

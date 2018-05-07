@@ -14,13 +14,6 @@ public class GameManager : NetworkBehaviour
 	private float roundStartTime;
 
 	[SyncVar] int currentPlayerNumber = 0;
-	//[SyncVar] int[] playersPlace = new int[4];
-
-	/*public void checkNextPoint(int playerId)
-	{
-		
-	}*/
-
 
 	public void spawnPlayer(GameObject car)
 	{

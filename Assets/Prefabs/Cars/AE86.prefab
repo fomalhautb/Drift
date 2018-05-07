@@ -541,7 +541,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  backAcceleration: 15
+  backAcceleration: 20
   torque:
     serializedVersion: 2
     m_Curve:
@@ -572,5 +572,4 @@ MonoBehaviour:
   - {fileID: 1640088780060946}
   - {fileID: 1676637542382468}
   - {fileID: 1542847847789354}
-  text: {fileID: 0}
   phoneRotateRate: 2
