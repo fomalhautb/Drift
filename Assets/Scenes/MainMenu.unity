@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 8
+  serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -39,6 +39,7 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -54,11 +55,10 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 9
+    serializedVersion: 10
     m_Resolution: 2
     m_BakeResolution: 40
-    m_TextureWidth: 1024
-    m_TextureHeight: 1024
+    m_AtlasSize: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -499,7 +499,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 301009087}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 968470264}
+        m_MethodName: ChoiceCarRight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &301009087
@@ -925,6 +936,12 @@ MonoBehaviour:
   conMan: {fileID: 1862133332}
   mainUI: {fileID: 363236572}
   waitingUI: {fileID: 972367321}
+  exhibition: {fileID: 2056110023}
+  Cars:
+  - {fileID: 1783667085080046, guid: b985a549ab7c9054cb6fb4f0896249d8, type: 2}
+  - {fileID: 1249565323828190, guid: 7acd11c5f97cde04db07053fd3a5c899, type: 2}
+  - {fileID: 1487907868758532, guid: f1012e9f8f9e6514384d0faeebb3e052, type: 2}
+  - {fileID: 1904620031100992, guid: 29a5ef50039c8b84faf20f3f9e633069, type: 2}
 --- !u!1 &969021936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,7 +1062,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_AnchoredPosition: {x: 0, y: -0.000061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1204856433
@@ -1080,7 +1097,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 22.77, y: 0.000005722}
+  m_AnchoredPosition: {x: 22.770004, y: 0.000005722046}
   m_SizeDelta: {x: -45.54, y: -0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1204856435
@@ -1277,49 +1294,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1374497056}
---- !u!1001 &1402779913
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 2056110025}
-    m_Modifications:
-    - target: {fileID: 4130302770351584, guid: e18b119eb6aadf04ca36d1e591ca7b34, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4130302770351584, guid: e18b119eb6aadf04ca36d1e591ca7b34, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4130302770351584, guid: e18b119eb6aadf04ca36d1e591ca7b34, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -0.26
-      objectReference: {fileID: 0}
-    - target: {fileID: 4130302770351584, guid: e18b119eb6aadf04ca36d1e591ca7b34, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4130302770351584, guid: e18b119eb6aadf04ca36d1e591ca7b34, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4130302770351584, guid: e18b119eb6aadf04ca36d1e591ca7b34, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4130302770351584, guid: e18b119eb6aadf04ca36d1e591ca7b34, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4130302770351584, guid: e18b119eb6aadf04ca36d1e591ca7b34, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114723569566723598, guid: e18b119eb6aadf04ca36d1e591ca7b34, type: 2}
-  m_ParentPrefab: {fileID: 100100000, guid: e18b119eb6aadf04ca36d1e591ca7b34, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1428373535
 GameObject:
   m_ObjectHideFlags: 0
@@ -1685,7 +1659,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1586244432}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 968470264}
+        m_MethodName: ChoiceCarLeft
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1586244432
@@ -1752,6 +1737,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 2b4b3a715b71ad54b81da4238a84a1c2, type: 2}
   m_StaticBatchInfo:
@@ -1804,7 +1790,7 @@ Transform:
   m_LocalScale: {x: 7, y: 0.3, z: 7}
   m_Children: []
   m_Father: {fileID: 2056110025}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1862133331
 GameObject:
@@ -1895,7 +1881,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2117106816}
   - {fileID: 1823292689}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -1992,8 +1977,3 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 0
---- !u!4 &2117106816 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4130302770351584, guid: e18b119eb6aadf04ca36d1e591ca7b34,
-    type: 2}
-  m_PrefabInternal: {fileID: 1402779913}

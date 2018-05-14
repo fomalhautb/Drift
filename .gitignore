@@ -8,6 +8,7 @@ UnityPackageManager
 *.userprefs
 *csproj
 UnityPlayer.dll
-
+Mono
+Drift_data
 *.exe
 *.apk

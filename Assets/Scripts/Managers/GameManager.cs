@@ -15,11 +15,6 @@ public class GameManager : NetworkBehaviour
 
 	[SyncVar] int currentPlayerNumber = 0;
 
-	public void spawnPlayer(GameObject car)
-	{
-		currentPlayerNumber += 1;
-	}
-
 	public void StartGame()
 	{
 		StartGameTime ();

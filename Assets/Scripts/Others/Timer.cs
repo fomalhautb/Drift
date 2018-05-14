@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Timer : MonoBehaviour 
+public class Timer
 {
 	private float startTime;
 
-	public void startTimer()
+	public void StartTimer()
 	{
 		startTime = Time.time;
 	}
 
-	public float readTimer()
+	public float ReadTimer()
 	{
 		return Time.time - startTime;
 	}
+
+	public void ResetTime()
+	{
+		startTime = Time.time;
+	}
 }
+	

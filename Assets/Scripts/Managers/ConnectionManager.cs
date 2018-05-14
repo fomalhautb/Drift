@@ -18,6 +18,7 @@ public class ConnectionManager : NetworkDiscovery
 	{
 		Initialize ();
 		StartAsClient ();
+		GlobalManager.isServer = false;
 	}
 
 	public void CloseConnection()

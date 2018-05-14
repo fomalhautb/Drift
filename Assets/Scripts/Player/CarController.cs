@@ -119,7 +119,7 @@ public class CarController : NetworkBehaviour
 		{
 			if (i < 2)
 			{
-				tires [i].transform.rotation = Quaternion.Euler(transform.up * (transform.eulerAngles.y + 90 + InputX() * 30));
+				tires [i].transform.rotation = Quaternion.Euler(transform.up * (transform.eulerAngles.y + InputX() * 30));
 			}
 		}
 	}

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class GlobalManager : object
 {
-	public static bool isServer = false;
+	public static bool isServer = true;
 	public static string serverIP = "";
+	public static int playerCarIndex = 0;
 }
