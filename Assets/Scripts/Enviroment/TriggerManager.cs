@@ -8,6 +8,7 @@ public class TriggerManager : MonoBehaviour {
 	public GameManager gameManager;
 	[HideInInspector]public int currentTrigger = 0;
 	[HideInInspector]public int currentRound = 0;
+	private bool firstRound = true;
 
 	private ArrayList triggers = new ArrayList();
 	private ArrayList lastTrigger;
@@ -48,9 +49,15 @@ public class TriggerManager : MonoBehaviour {
 		}
 		if (currentTrigger == 1)
 		{
+			if (firstRound)
+			{
+				gameManager.StartGame ();
+				firstRound = false;
+			}
 			currentRound += 1;
-			gameManager.StartGame ();
+			gameManager.StartRoundTime ();
 		}
+
 		lastTrigger = (ArrayList)triggers [currentTrigger];
 		foreach (object child in (ArrayList) triggers [currentTrigger])
 		{

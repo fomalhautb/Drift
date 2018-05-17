@@ -16,7 +16,7 @@ public class Timer
 		return Time.time - startTime;
 	}
 
-	public void ResetTime()
+	public void ResetTimer()
 	{
 		startTime = Time.time;
 	}

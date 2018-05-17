@@ -509,7 +509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db4b1a9eed7dba49a03394d10ed64e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 47
+  acceleration: 53
   accelerationDrag:
     serializedVersion: 2
     m_Curve:
@@ -561,7 +561,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  backAcceleration: 30
+  backAcceleration: 20
   torque:
     serializedVersion: 2
     m_Curve:
@@ -595,7 +595,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  rotateDrag: 6
+  rotateDrag: 4
   tires:
   - {fileID: 1441558811447272, guid: be92e2fe40d7a27448adb9325928166b, type: 2}
   - {fileID: 1453260784424882, guid: be92e2fe40d7a27448adb9325928166b, type: 2}

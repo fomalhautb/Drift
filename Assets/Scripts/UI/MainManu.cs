@@ -22,12 +22,14 @@ public class MainManu : MonoBehaviour
 
 	public void PlayAsServer()
 	{
+		//start to broadcast the ip, callback of play as server button
 		conMan.StartServer();
 		OpenWaitingUI ();
 	}
 
 	public void PlayAsClient()
 	{
+		//start to listen the ip, callback of play as client button
 		conMan.StartClient ();
 		OpenWaitingUI ();
 	}
@@ -40,6 +42,7 @@ public class MainManu : MonoBehaviour
 
 	public void BackToMainMenu()
 	{
+		//callback of back button
 		conMan.CloseConnection ();
 		mainUI.SetActive (true);
 		waitingUI.SetActive (false);
@@ -47,11 +50,13 @@ public class MainManu : MonoBehaviour
 
 	public void Ready()
 	{
+		//callback of ready button
 		SceneManager.LoadScene ("Town");
 	}
 
 	public void ChoiceCarLeft()
 	{
+		//callback of left button
 		currentCarIndex = currentCarIndex - 1;
 		if (currentCarIndex < 0)
 		{
@@ -63,6 +68,7 @@ public class MainManu : MonoBehaviour
 
 	public void ChoiceCarRight()
 	{
+		//callback of right button
 		currentCarIndex = currentCarIndex + 1;
 		if (currentCarIndex >= Cars.Length)
 		{
@@ -73,6 +79,7 @@ public class MainManu : MonoBehaviour
 
 	public void InstantiateCar(int index)
 	{
+		//change the car on the exhibition
 		if (currentCar)
 		{
 			Destroy (currentCar);

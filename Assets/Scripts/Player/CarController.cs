@@ -22,8 +22,11 @@ public class CarController : NetworkBehaviour
 	{
 		if (isLocalPlayer)
 		{
+			//setup camera
 			Camera.main.GetComponent<CameraMovement> ().focus = transform.gameObject;
+			//transform.Find ("GameManager").GetComponent<GameManager> ().playerId = GetComponent<NetworkIdentity> ().GetInstanceID ();
 			transform.tag = "Player";
+			//setup gyro
 			Input.gyro.enabled = true;
 			Input.gyro.updateInterval = 0.01f;
 		} else
@@ -36,20 +39,25 @@ public class CarController : NetworkBehaviour
 	{
 		if (isLocalPlayer)
 		{
+			//move the car and send the position to the server
 			MoveCar ();
 			ComputeCarPhysic ();
 			CmdSendServerPos (transform.position, transform.rotation, GetComponent<Rigidbody> ().velocity.magnitude, GetComponent<NetworkIdentity>().GetInstanceID());
 		} else
 		{
+			//sync from the server
 			LerpPosition ();
 		} 
+		//show the tire movement
 		MoveTire ();
 	}
 
 	float InputY ()
 	{
+		//get the vertical input
 		if (Application.platform == RuntimePlatform.Android)
 		{
+			//input for android
 			if (Input.GetMouseButton(0))
 			{
 				if (Input.mousePosition.x < Screen.width / 2)
@@ -64,17 +72,21 @@ public class CarController : NetworkBehaviour
 
 		} else
 		{
+			//input for windows
 			return Input.GetAxisRaw ("Vertical");
 		}
 	}
 
 	float InputX ()
 	{
+		//get the horizontal input
 		if (Application.platform == RuntimePlatform.Android)
 		{
+			//input for android with gyro
 			return Mathf.Max(Mathf.Min(Input.gyro.gravity.x * phoneRotateRate, 1), -1);
 		} else
 		{
+			//input for windows
 			return Input.GetAxisRaw ("Horizontal");
 		}
 		
@@ -82,14 +94,10 @@ public class CarController : NetworkBehaviour
 
 	void MoveCar ()
 	{
-		if (InputY () > 0)
-		{
-			GetComponent<Rigidbody> ().velocity += transform.forward * acceleration * Time.fixedDeltaTime;
-		} else if (InputY () < 0)
-		{
-			GetComponent<Rigidbody> ().velocity += -transform.forward * backAcceleration * Time.fixedDeltaTime;
-		}
+		//compute the velocity
+		GetComponent<Rigidbody> ().velocity += InputY () * transform.forward * acceleration * Time.fixedDeltaTime;
 
+		//if the car is driving backwarts, inverse the direction of rotation, then compute the torque
 		if (transform.InverseTransformVector(GetComponent<Rigidbody> ().velocity).z > 0)
 		{
 			GetComponent<Rigidbody> ().AddTorque (InputX () * (Vector3.up * torque.Evaluate (GetComponent<Rigidbody> ().velocity.magnitude) * Time.fixedDeltaTime));
@@ -101,6 +109,7 @@ public class CarController : NetworkBehaviour
 
 	void ComputeCarPhysic ()
 	{
+		//compute the drag
 		GetComponent<Rigidbody> ().velocity *= (1 - accelerationDrag.Evaluate (transform.InverseTransformVector(GetComponent<Rigidbody> ().velocity).z) * Time.fixedDeltaTime);
 		GetComponent<Rigidbody> ().angularVelocity *= (1 - rotateDrag * Time.fixedDeltaTime);
 		GetComponent<Rigidbody> ().MovePosition (new Vector3 (transform.position.x, 0, transform.position.z));
@@ -109,12 +118,14 @@ public class CarController : NetworkBehaviour
 
 	void LerpPosition()  
 	{  
+		//lerp the position from the server
 		transform.position = Vector3.Lerp (transform.position, playerPos, (playerSpeed+2) * Time.fixedDeltaTime);
 		transform.rotation = Quaternion.Lerp (transform.rotation, playerRot, (playerSpeed+2) * Time.fixedDeltaTime);
 	} 
 
 	void MoveTire()
 	{
+		//rotate the tires while the rotation
 		for(int i=0; i < 4; i++)
 		{
 			if (i < 2)
@@ -127,15 +138,14 @@ public class CarController : NetworkBehaviour
 	[Command]
 	public void CmdSendServerPos(Vector3 pos, Quaternion rot, float speed, int id)  
 	{  
-		playerPos = pos;  
-		playerRot = rot;  
-		playerSpeed = speed;
+		//syc the position to the server
 		RpcSycPos (pos, rot, speed, id);
 	}
 
 	[ClientRpc]
 	public void RpcSycPos(Vector3 pos, Quaternion rot, float speed, int id)
 	{
+		//syc the position to the client
 		if (id != GetComponent<NetworkIdentity> ().GetInstanceID())
 		{
 			playerPos = pos;  

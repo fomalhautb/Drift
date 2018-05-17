@@ -8,16 +8,17 @@ public class GameManager : NetworkBehaviour
 	public Transform[] SpawnPoints = new Transform[4];
 	public InGameUI inGameUI;
 	public TriggerManager triggerManager;
+	public int playerId;
 
-	private int playerId;
-	private float gameStartTime;
-	private float roundStartTime;
+	private Timer gameTimer = new Timer();
+	private Timer roundTimer = new Timer();
+	private float[] playerTime = new float[20];
 
-	[SyncVar] int currentPlayerNumber = 0;
+	//[SyncVar] int currentPlayerNumber = 0;
 
 	public void StartGame()
 	{
-		StartGameTime ();
+		gameTimer.StartTimer ();
 	}
 
 	void Update()
@@ -27,18 +28,21 @@ public class GameManager : NetworkBehaviour
 
 	void UpdateGameTime()
 	{
+		//show the game time
 		if (triggerManager.currentRound > 0)
 		{
-			inGameUI.UpdateTimeUI (triggerManager.currentRound, Time.time - roundStartTime, Time.time - gameStartTime);
+			inGameUI.UpdateTimeUI (triggerManager.currentRound, roundTimer.ReadTimer(), gameTimer.ReadTimer());
 		}
+		//CmdSendTime (gameTimer.ReadTimer ());
 	}
 
-	void StartGameTime()
+	public void StartRoundTime()
 	{
-		roundStartTime = Time.time;
-		if (gameStartTime == 0)
-		{
-			gameStartTime = Time.time;
-		}
+		roundTimer.StartTimer ();
+	}
+
+	[Command] void CmdSendTime(float time, int id)
+	{
+		playerTime [id] = time;
 	}
 }

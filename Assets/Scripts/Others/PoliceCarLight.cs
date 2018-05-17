@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PoliceCarLight : MonoBehaviour 
 {
+	//change the color the police car light
 	public Light light;
 	public float lightTime;
 
@@ -25,7 +26,7 @@ public class PoliceCarLight : MonoBehaviour
 			{
 				light.color = Color.red;
 			}
-			timer.ResetTime ();
+			timer.ResetTimer ();
 		}
 	}
 }
