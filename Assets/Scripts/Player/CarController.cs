@@ -138,14 +138,14 @@ public class CarController : NetworkBehaviour
 	[Command]
 	public void CmdSendServerPos(Vector3 pos, Quaternion rot, float speed, int id)  
 	{  
-		//syc the position to the server
-		RpcSycPos (pos, rot, speed, id);
+		//sync the position to the server
+		RpcSyncPos (pos, rot, speed, id);
 	}
 
 	[ClientRpc]
-	public void RpcSycPos(Vector3 pos, Quaternion rot, float speed, int id)
+	public void RpcSyncPos(Vector3 pos, Quaternion rot, float speed, int id)
 	{
-		//syc the position to the client
+		//sync the position to the client
 		if (id != GetComponent<NetworkIdentity> ().GetInstanceID())
 		{
 			playerPos = pos;  
